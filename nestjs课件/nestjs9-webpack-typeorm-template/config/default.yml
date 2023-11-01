@@ -1,0 +1,17 @@
+server:
+  port: 3000
+  origin: localhost
+
+db:
+  type: "mongodb"
+  port: 27017
+  database: "toimcdb"
+
+jwt:
+  expiresIn: 3600
+
+redis:
+  port: 6379
+
+swagger:
+  enable: true

@@ -1,0 +1,11 @@
+# 需要修改为.json后缀
+# {
+#   "db": {
+#     "host": "yourdomain.com",
+#     "port": 55432
+#   }
+# }
+
+db:
+  host: "localhost"
+  port: 6543

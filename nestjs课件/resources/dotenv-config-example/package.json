@@ -1,0 +1,19 @@
+{
+  "name": "dotenv-config-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node index.js",
+    "prod": "cross-env NODE_ENV=production node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.8",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.2",
+    "js-yaml": "^4.1.0"
+  }
+}
