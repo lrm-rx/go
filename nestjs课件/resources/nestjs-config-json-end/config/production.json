@@ -1,7 +1,0 @@
-{
-  "database": {
-    "dbname": "prod",
-    "username": "root",
-    "password": "long-random-password"
-  }
-}
