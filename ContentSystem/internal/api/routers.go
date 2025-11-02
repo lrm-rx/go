@@ -21,5 +21,6 @@ func CmsRouters(r *gin.Engine) {
 	noAuth := r.Group(noAuthPath)
 	{
 		noAuth.POST("/cms/register", cmsApp.Register)
+		noAuth.POST("/cms/login", cmsApp.Login)
 	}
 }
