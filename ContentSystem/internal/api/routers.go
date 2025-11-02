@@ -16,6 +16,7 @@ func CmsRouters(r *gin.Engine) {
 	root := r.Group(rootPath).Use(session.Auth)
 	{
 		root.GET("/cms/ping", cmsApp.Hello)
+		root.POST("/cms/content/create", cmsApp.ContentCreate)
 	}
 
 	noAuth := r.Group(noAuthPath)
