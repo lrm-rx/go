@@ -1,0 +1,7 @@
+system:
+  ip:
+  port: 8080
+db:
+  host:
+  port:
+  db:
