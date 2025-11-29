@@ -1,7 +1,5 @@
-[2025-11-29 14:02:15] [31m[error][0m main.go:16 main.main error
-[2025-11-29 14:06:35] [31m[fatal][0m read_config.go:22 rbac.admin/core.ReadConfig 配置文件格式错误 yaml: unmarshal errors:
-  line 3: cannot unmarshal !!str `8080a` into int
-[2025-11-29 14:06:44] [31m[error][0m main.go:16 main.main error
-{"file":"F:/go/rbac_admin/main.go:16","func":"main.main","level":"error","msg":"error","time":"2025-11-29T14:09:15+08:00"}
-[2025-11-29 14:32:40] [31m[fatal][0m db.go:47 rbac.admin/core.InitGorm 未配置数据库连接
-[2025-11-29 14:36:04] [31m[fatal][0m db.go:48 rbac.admin/core.InitGorm 数据库连接失败 dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.
+[2025-11-29 15:05:28] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:05:40] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:12:10] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:12:29] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:16:43] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.

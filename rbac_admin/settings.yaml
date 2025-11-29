@@ -8,3 +8,8 @@ db:
   port: 3006
   user: root
   password: 756131502
+redis:
+  addr: 127.0.0.1:6379
+  password: ""
+  db: 1
+  pool_size: 1-
