@@ -3,3 +3,14 @@
 [2025-11-29 15:12:10] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
 [2025-11-29 15:12:29] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
 [2025-11-29 15:16:43] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:42:44] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 15:43:20] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 18:35:05] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 18:35:05] [31m[fatal][0m db.go:19 rbac.admin/flags.AutoMigrate 表结构迁移失败 failed to parse field: MenuList, error: invalid field found for struct rbac.admin/models.MenuModel's field ParentMenuModel: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[2025-11-29 18:38:45] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 18:38:45] [31m[fatal][0m db.go:19 rbac.admin/flags.AutoMigrate 表结构迁移失败 invalid field found for struct rbac.admin/models.UserRoleModel's field UserModel: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[2025-11-29 18:39:25] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 18:39:25] [31m[fatal][0m db.go:19 rbac.admin/flags.AutoMigrate 表结构迁移失败 invalid field found for struct rbac.admin/models.UserRoleModel's field UserModel: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[2025-11-29 18:39:48] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
+[2025-11-29 18:39:48] [31m[fatal][0m db.go:19 rbac.admin/flags.AutoMigrate 表结构迁移失败 invalid field found for struct rbac.admin/models.UserRoleModel's field UserModel: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[2025-11-29 18:45:09] [31m[error][0m redis.go:20 rbac.admin/core.InitRedis 连接redis失败 NOAUTH Authentication required.
