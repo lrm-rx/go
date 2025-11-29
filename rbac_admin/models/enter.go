@@ -4,25 +4,26 @@ import "time"
 
 type Model struct {
 	ID       uint      `gorm:"primaryKey"`
-	CreateAt time.Time `json:"createAt"`
-	UpdateAt time.Time `json:"updateAt"`
+	CreateAt time.Time `gorm:"autoCreateTime" json:"createAt"`
+	UpdateAt time.Time `gorm:"autoUpdateTime" json:"updateAt"`
 }
 
 // 用户表
 type UserModel struct {
 	Model
-	Username string      `gorm:"size:16" json:"username"`
-	Nickname string      `gorm:"size:32" json:"nickname"`
-	Avatar   string      `gorm:"size:256" json:"avatar"`
-	Email    string      `gorm:"size:32" json:"email"`
-	Password string      `gorm:"size:256" json:"-"`
-	RoleList []RoleModel `gorm:"many2many:user_role_models;joinForeignKey:UserID;JoinReferences:RoleID" json:"roleList"`
+	Username     string      `gorm:"size:16,unique" json:"username"`
+	Nickname     string      `gorm:"size:32" json:"nickname"`
+	Avatar       string      `gorm:"size:256" json:"avatar"`
+	Email        string      `gorm:"size:32" json:"email"`
+	Password     string      `gorm:"size:256" json:"-"`
+	IsSuperAdmin bool        `gorm:"default:false" json:"isSuperAdmin"`
+	RoleList     []RoleModel `gorm:"many2many:user_role_models;joinForeignKey:UserID;JoinReferences:RoleID" json:"roleList"`
 }
 
 // 角色表
 type RoleModel struct {
 	Model
-	Title    string      `gorm:"size:32" json:"title"`
+	Title    string      `gorm:"size:16,unique" json:"title"`
 	UserList []UserModel `gorm:"many2many:user_role_models;joinForeignKey:RoleID;JoinReferences:UserID" json:"roleList"`
 	MenuList []MenuModel `gorm:"many2many:role_menu_models;joinForeignKey:RoleID;JoinReferences:MenuID" json:"menuList"`
 }

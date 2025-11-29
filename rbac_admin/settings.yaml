@@ -1,5 +1,6 @@
 system:
-  ip:
+  mode: release
+  ip: 127.0.0.1
   port: 8080
 db:
   mode: mysql # mysql pgsql sqlite ""
@@ -12,4 +13,4 @@ redis:
   addr: 127.0.0.1:6379
   password: ""
   db: 1
-  pool_size: 1-
+  pool_size: 10

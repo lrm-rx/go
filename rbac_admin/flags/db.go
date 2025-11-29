@@ -1,6 +1,7 @@
 package flags
 
 import (
+	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/sirupsen/logrus"
 	"rbac.admin/global"
 	"rbac.admin/models"
@@ -14,6 +15,7 @@ func AutoMigrate() {
 		&models.MenuModel{},
 		&models.ApiModel{},
 		&models.RoleMenuModel{},
+		&gormadapter.CasbinRule{},
 	)
 	if err != nil {
 		logrus.Fatalf("表结构迁移失败 %s", err)

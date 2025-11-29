@@ -27,4 +27,13 @@ func Run() {
 		AutoMigrate()
 		os.Exit(0)
 	}
+	switch FlagOptions.Menu {
+	case "user":
+		var user User
+		switch FlagOptions.Type {
+		case "create":
+			user.CreateSuperAdmin()
+			os.Exit(0)
+		}
+	}
 }
