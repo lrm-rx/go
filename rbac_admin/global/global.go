@@ -1,7 +1,11 @@
 package global
 
-import "rbac.admin/config"
+import (
+	"gorm.io/gorm"
+	"rbac.admin/config"
+)
 
 var (
 	Config *config.Config
+	DB     *gorm.DB
 )

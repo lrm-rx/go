@@ -2,6 +2,9 @@ system:
   ip:
   port: 8080
 db:
-  host:
-  port:
-  db:
+  mode: mysql # mysql pgsql sqlite ""
+  db_name: rbac_db
+  host: 127.0.0.1
+  port: 3006
+  user: root
+  password: 756131502
