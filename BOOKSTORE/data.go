@@ -3,10 +3,8 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 	"time"
 )
 
@@ -16,19 +14,8 @@ const (
 
 // 使用GORM
 func NewDB(dsn string) (*gorm.DB, error) {
-	dbFile := "test.db"
-
-	// 检查文件是否存在
-	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
-		// 文件不存在，创建空文件
-		file, err := os.Create(dbFile)
-		if err != nil {
-			panic("创建数据库文件失败: " + err.Error())
-		}
-		file.Close()
-		fmt.Println("数据库文件已创建:", dbFile)
-	}
-	db, err := gorm.Open(sqlite.Open(dbFile), &gorm.Config{})
+	// 使用 MySQL 驱动连接数据库
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("连接数据库失败: " + err.Error())
 	}
@@ -70,7 +57,7 @@ func (b *bookstore) CreateShelf(ctx context.Context, data Shelf) (*Shelf, error)
 	if size <= 0 {
 		size = defaultShelfSize
 	}
-	v := Shelf{Theme: data.Theme, Size: data.Size}
+	v := Shelf{Theme: data.Theme, Size: size}
 	err := b.db.WithContext(ctx).Create(&v).Error
 	return &v, err
 }

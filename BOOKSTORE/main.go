@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// 连接数据库
-	db, err := NewDB("bookstore.db")
+	db, err := NewDB("root:756131502@tcp(localhost:3006)/bookstore_db?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		fmt.Printf("连接数据库失败: %v\n", err)
 		return
