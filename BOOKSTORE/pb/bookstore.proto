@@ -64,6 +64,7 @@ message Shelf {
 message Book {
   int64 id = 1;
   string author = 2;
+  string title = 3;
 }
 message ListShelvesResponse {
   repeated Shelf shelves = 1;

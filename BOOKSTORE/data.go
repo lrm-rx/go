@@ -37,7 +37,7 @@ type Shelf struct {
 type Book struct {
 	ID       int64 `gorm:"primaryKey"`
 	Author   string
-	title    string
+	Title    string
 	ShelfID  int64
 	CreateAt time.Time `gorm:"autoCreateTime"`
 	UpdateAt time.Time `gorm:"autoUpdateTime"`
@@ -79,4 +79,11 @@ func (b *bookstore) ListShelf(ctx context.Context) ([]*Shelf, error) {
 // 删除书架
 func (b *bookstore) DeleteShelf(ctx context.Context, id int64) error {
 	return b.db.WithContext(ctx).Delete(&Shelf{}, id).Error
+}
+
+// 根据书架id查询图书
+func (b *bookstore) GetBookListByShelfID(ctx context.Context, shelfID int64, cursor string, pageSize int) ([]*Book, error) {
+	var vl []*Book
+	err := b.db.WithContext(ctx).Where("shelf_id = ? and id > ?", shelfID, cursor).Order("id asc").Limit(pageSize).Find(&vl).Error
+	return vl, err
 }

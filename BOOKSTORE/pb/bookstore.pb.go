@@ -87,6 +87,7 @@ type Book struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Author        string                 `protobuf:"bytes,2,opt,name=author,proto3" json:"author,omitempty"`
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -131,6 +132,13 @@ func (x *Book) GetId() int64 {
 func (x *Book) GetAuthor() string {
 	if x != nil {
 		return x.Author
+	}
+	return ""
+}
+
+func (x *Book) GetTitle() string {
+	if x != nil {
+		return x.Title
 	}
 	return ""
 }
@@ -491,10 +499,11 @@ const file_bookstore_proto_rawDesc = "" +
 	"\x05Shelf\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
 	"\x05theme\x18\x02 \x01(\tR\x05theme\x12\x12\n" +
-	"\x04size\x18\x03 \x01(\x03R\x04size\".\n" +
+	"\x04size\x18\x03 \x01(\x03R\x04size\"D\n" +
 	"\x04Book\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x16\n" +
-	"\x06author\x18\x02 \x01(\tR\x06author\"A\n" +
+	"\x06author\x18\x02 \x01(\tR\x06author\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\"A\n" +
 	"\x13ListShelvesResponse\x12*\n" +
 	"\ashelves\x18\x01 \x03(\v2\x10.bookstore.ShelfR\ashelves\"<\n" +
 	"\x12CreateShelfRequest\x12&\n" +
