@@ -7,7 +7,7 @@ import (
 	"os"
 	"rbac.admin/global"
 	"rbac.admin/models"
-	pwd "rbac.admin/utils"
+	"rbac.admin/utils/pwd"
 )
 
 type User struct {
