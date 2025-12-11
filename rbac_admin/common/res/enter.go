@@ -1,6 +1,9 @@
 package res
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"rbac.admin/utils/validate"
+)
 
 type Response struct {
 	Code int64  `json:"code"`
@@ -39,4 +42,9 @@ func FailWidthMsg(msg string, c *gin.Context) {
 
 func FailWidthError(error error, c *gin.Context) {
 	response(1001, gin.H{}, error.Error(), c)
+}
+
+func FailWithBinding(err error, c *gin.Context) {
+	data := validate.ValidateError(err)
+	response(1001, data.FieldMap, data.Msg, c)
 }
