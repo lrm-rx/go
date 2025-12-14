@@ -18,3 +18,5 @@ jwt:
   expires: 8
   issuer: ming
   secret: 779f8b15-1a02-48a1-a4aa-fe7fdf206351
+captcha:
+  enable: true

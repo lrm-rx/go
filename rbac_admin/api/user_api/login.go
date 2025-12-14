@@ -7,13 +7,16 @@ import (
 	"rbac.admin/global"
 	"rbac.admin/middleware"
 	"rbac.admin/models"
+	"rbac.admin/utils/captcha"
 	"rbac.admin/utils/jwts"
 	"rbac.admin/utils/pwd"
 )
 
 type LoginRequest struct {
-	Username string `json:"username" binding:"required" label:"用户名"`
-	Password string `json:"password" binding:"required" label:"密码"`
+	Username    string `json:"username" binding:"required" label:"用户名"`
+	Password    string `json:"password" binding:"required" label:"密码"`
+	CaptchaID   string `json:"captchaID"`
+	CaptchaCode string `json:"captchaCode"`
 }
 
 type LoginResponse struct {
@@ -21,14 +24,18 @@ type LoginResponse struct {
 }
 
 func (UserAPI) LoginView(c *gin.Context) {
-	//var cr LoginRequest
-	//err := c.ShouldBindJSON(&cr)
-	//if err != nil {
-	//	//c.JSON(200, gin.H{"code": 1001, "msg": err.Error(), "data": nil})
-	//	res.FailWithBinding(err, c)
-	//	return
-	//}
 	cr := middleware.GetBind[LoginRequest](c)
+	if global.Config.Captcha.Enable {
+		// 启用了验证码
+		if cr.CaptchaID == "" || cr.CaptchaCode == "" {
+			res.FailWidthMsg("请输入图片验证码", c)
+			return
+		}
+		if !captcha.CaptchaStore.Verify(cr.CaptchaID, cr.CaptchaCode, true) {
+			res.FailWidthMsg("图片验证码验证失败", c)
+			return
+		}
+	}
 	var user models.UserModel
 	err := global.DB.Preload("RoleList").Take(&user, "username = ?", cr.Username).Error
 	if err != nil {
