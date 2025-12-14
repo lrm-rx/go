@@ -8,7 +8,7 @@ import (
 )
 
 func Login(userName, passwd string) (*models.LoginRes, error) {
-	passwd = utils.Md5Crypt(passwd, "asdfghjkl")
+	passwd = utils.Md5Crypt(passwd, "b610c98f-2485-4715-89d2-8313118e3aa4")
 
 	//user := dao.GetUser(userName, passwd)
 	//if user == nil {

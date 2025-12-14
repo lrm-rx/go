@@ -18,7 +18,10 @@ func main() {
 	}
 	// 路由
 	router.Router()
+
+	log.Println("服务已成功运行, 地址为 127.0.0.1:8080")
 	if err := server.ListenAndServe(); err != nil {
 		log.Println(err)
+		return
 	}
 }
