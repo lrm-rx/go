@@ -6,4 +6,5 @@ type Config struct {
 	Redis   Redis   `yaml:"redis"`
 	Jwt     Jwt     `yaml:"jwt"`
 	Captcha Captcha `yaml:"captcha"`
+	Email   Email   `yaml:"email"`
 }
