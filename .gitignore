@@ -1,3 +1,6 @@
 .idea
 .env
 env
+settings_dev.yaml
+settings.yaml
+logs
