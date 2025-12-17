@@ -11,7 +11,7 @@ func SendEmail(subject string, content string, users ...string) error {
 	e := global.Config.Email
 	mailer := gomail.NewMessage()
 	mailer.SetHeader("From", e.User)
-	mailer.SetHeader("to", users...)
+	mailer.SetHeader("To", users...)
 	mailer.SetHeader("Subject", subject) // 主题
 	mailer.SetBody("text/html", content) // 正文
 
