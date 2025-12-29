@@ -6,7 +6,7 @@ import (
 	"rbac.admin/global"
 	"rbac.admin/middleware"
 	"rbac.admin/models"
-	"rbac.admin/utils/captcha"
+	"rbac.admin/utils/email"
 	"rbac.admin/utils/pwd"
 )
 
@@ -20,7 +20,8 @@ type RegisterRequest struct {
 
 func (UserAPI) RegisterView(c *gin.Context) {
 	cr := middleware.GetBind[RegisterRequest](c)
-	if !captcha.CaptchaStore.Verify(cr.EmailID, cr.EmailCode, false) {
+
+	if !email.Verify(cr.EmailID, cr.Email, cr.EmailCode) {
 		res.FailWidthMsg("邮箱验证失败", c)
 		return
 	}
@@ -34,6 +35,8 @@ func (UserAPI) RegisterView(c *gin.Context) {
 	err := global.DB.Take(&user, "email = ?", cr.Email).Error
 	if err == nil {
 		res.FailWidthMsg("该邮箱已经被注册", c)
+		// 把之前的那个邮箱id删除
+		email.Remove(cr.EmailID)
 		return
 	}
 	hasPwd := pwd.HashPassword(cr.RePassword)
