@@ -39,11 +39,11 @@ func (UserAPI) RegisterView(c *gin.Context) {
 		email.Remove(cr.EmailID)
 		return
 	}
-	hasPwd := pwd.HashPassword(cr.RePassword)
+	hashPwd := pwd.HashPassword(cr.RePassword)
 	err = global.DB.Create(&models.UserModel{
 		Username: cr.Email,
 		Email:    cr.Email,
-		Password: hasPwd,
+		Password: hashPwd,
 	}).Error
 	if err != nil {
 		res.FailWidthMsg("注册失败", c)

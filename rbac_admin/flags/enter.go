@@ -22,6 +22,7 @@ func init() {
 	flag.Parse()
 }
 
+// 命令行创建超级管理员：go run main.go -m user -t create
 func Run() {
 	if FlagOptions.DB {
 		AutoMigrate()

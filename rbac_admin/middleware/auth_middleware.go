@@ -23,3 +23,7 @@ func AuthMiddleware(c *gin.Context) {
 	c.Set("claims", claims)
 	return
 }
+
+func GetAuth(c *gin.Context) *jwts.Claims {
+	return c.MustGet("claims").(*jwts.Claims)
+}
