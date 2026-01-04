@@ -4,3 +4,4 @@ env
 settings_dev.yaml
 settings.yaml
 logs
+uploads
