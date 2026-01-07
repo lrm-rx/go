@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Model struct {
 	ID       uint      `gorm:"primaryKey"`
@@ -18,6 +20,20 @@ type UserModel struct {
 	Password     string      `gorm:"size:256" json:"-"`
 	IsSuperAdmin bool        `gorm:"default:false" json:"isSuperAdmin"`
 	RoleList     []RoleModel `gorm:"many2many:user_role_models;joinForeignKey:UserID;JoinReferences:RoleID" json:"roleList"`
+}
+
+func (u *UserModel) GetRoleList() []uint {
+	// 如果RoleList为空或nil，直接返回空切片
+	if len(u.RoleList) == 0 {
+		return []uint{}
+	}
+
+	// 预分配容量，提高性能
+	roleList := make([]uint, 0, len(u.RoleList))
+	for _, model := range u.RoleList {
+		roleList = append(roleList, model.ID)
+	}
+	return roleList
 }
 
 // 角色表
