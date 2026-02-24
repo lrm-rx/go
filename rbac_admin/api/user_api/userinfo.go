@@ -22,7 +22,7 @@ func (UserAPI) UserinfoView(c *gin.Context) {
 	err := global.DB.Preload("RoleList").Take(&user, claims.UserID).Error
 
 	if err != nil {
-		res.FailWidthMsg("用户不存在", c)
+		res.FailWithMsg("用户不存在", c)
 		return
 	}
 	data := UserinfoResponse{

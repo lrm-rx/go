@@ -21,7 +21,7 @@ func (UserAPI) UpdateUserinfoView(c *gin.Context) {
 	var user models.UserModel
 	err := global.DB.Take(&user, claims.UserID).Error
 	if err != nil {
-		res.FailWidthMsg("用户不存在", c)
+		res.FailWithMsg("用户不存在", c)
 		return
 	}
 
@@ -31,7 +31,7 @@ func (UserAPI) UpdateUserinfoView(c *gin.Context) {
 	}).Error
 	if err != nil {
 		logrus.Errorf("修改用户信息失败: %v", err)
-		res.FailWidthMsg("修改用户信息失败", c)
+		res.FailWithMsg("修改用户信息失败", c)
 		return
 	}
 	res.OkWidthMsg("修改用户信息成功", c)

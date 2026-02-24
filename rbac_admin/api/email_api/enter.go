@@ -28,24 +28,28 @@ type SendEmailResponse struct {
 
 func (EmailAPI) SendEmailView(c *gin.Context) {
 	cr := middleware.GetBind[SendEmailRequest](c)
-
+	// 验证码长度检查
+	if len(cr.CaptchaCode) != 6 {
+		res.FailWithMsg("验证码长度必须为6位", c)
+		return
+	}
 	if !global.Config.Email.Verify() {
-		res.FailWidthMsg("尚未配置邮箱, 无法注册", c)
+		res.FailWithMsg("尚未配置邮箱, 无法注册", c)
 		return
 	}
 	if global.Config.Captcha.Enable {
 		// 启用了验证码
 		if cr.CaptchaID == "" || cr.CaptchaCode == "" {
-			res.FailWidthMsg("请输入图片验证码", c)
+			res.FailWithMsg("请输入图片验证码", c)
 			return
 		}
 		if !captcha.CaptchaStore.Verify(cr.CaptchaID, cr.CaptchaCode, true) {
-			res.FailWidthMsg("图片验证码验证失败", c)
+			res.FailWithMsg("图片验证码验证失败", c)
 			return
 		}
 	}
 	emailID := uuid.New().String()
-	code := random.RandStrByCode("012356789", 4)
+	code := random.RandStrByCode("012356789", 6)
 	email.Set(emailID, cr.Email, code)
 	/**
 	var driver = base64Captcha.DriverString{
@@ -53,7 +57,7 @@ func (EmailAPI) SendEmailView(c *gin.Context) {
 		Height:          60,
 		NoiseCount:      2,
 		ShowLineOptions: 0,
-		Length:          4,
+		Length:          6,
 		Source:          "012356789",
 	}
 	// todo
@@ -61,7 +65,7 @@ func (EmailAPI) SendEmailView(c *gin.Context) {
 	id, _, code, err := cp.Generate()
 	if err != nil {
 		logrus.Errorf("图片验证码生成失败 %s", err)
-		res.FailWidthMsg("图片验证码生成失败", c)
+		res.FailWithMsg("图片验证码生成失败", c)
 		return
 	}
 	*/
@@ -70,7 +74,7 @@ func (EmailAPI) SendEmailView(c *gin.Context) {
 	err := email.SendEmail("用户注册", content, cr.Email)
 	if err != nil {
 		logrus.Errorf("邮件发送失败 %s", err)
-		res.FailWidthMsg("邮件发送失败", c)
+		res.FailWithMsg("邮件发送失败", c)
 		return
 	}
 	res.OkWidthData(SendEmailResponse{

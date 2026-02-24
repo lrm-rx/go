@@ -28,11 +28,11 @@ func (UserAPI) LoginView(c *gin.Context) {
 	if global.Config.Captcha.Enable {
 		// 启用了验证码
 		if cr.CaptchaID == "" || cr.CaptchaCode == "" {
-			res.FailWidthMsg("请输入图片验证码", c)
+			res.FailWithMsg("请输入图片验证码", c)
 			return
 		}
 		if !captcha.CaptchaStore.Verify(cr.CaptchaID, cr.CaptchaCode, true) {
-			res.FailWidthMsg("图片验证码验证失败", c)
+			res.FailWithMsg("图片验证码验证失败", c)
 			return
 		}
 	}
@@ -40,12 +40,12 @@ func (UserAPI) LoginView(c *gin.Context) {
 	err := global.DB.Preload("RoleList").Take(&user, "username = ?", cr.Username).Error
 	if err != nil {
 		//c.JSON(200, gin.H{"code": 1001, "msg": "用户名或密码错误!", "data": nil})
-		res.FailWidthMsg("用户名或密码错误!", c)
+		res.FailWithMsg("用户名或密码错误!", c)
 		return
 	}
 
 	if !pwd.ComparePasswords(user.Password, cr.Password) {
-		res.FailWidthMsg("用户名或密码错误!", c)
+		res.FailWithMsg("用户名或密码错误!", c)
 		return
 	}
 	var roleList []uint
@@ -62,7 +62,7 @@ func (UserAPI) LoginView(c *gin.Context) {
 
 	if err != nil {
 		logrus.Errorf("jwt颁发token失败 %s", err)
-		res.FailWidthMsg("用户名登录失败!", c)
+		res.FailWithMsg("用户名登录失败!", c)
 		return
 	}
 

@@ -23,22 +23,22 @@ func (UserAPI) UpdatePasswordView(c *gin.Context) {
 	var user models.UserModel
 	err := global.DB.Take(&user, claims.UserID).Error
 	if err != nil {
-		res.FailWidthMsg("用户不存在", c)
+		res.FailWithMsg("用户不存在", c)
 		return
 	}
 	if !pwd.ComparePasswords(user.Password, cr.OldPwd) {
-		res.FailWidthMsg("原密码错误", c)
+		res.FailWithMsg("原密码错误", c)
 		return
 	}
 	if cr.Pwd != cr.RePwd {
-		res.FailWidthMsg("两次密码不一致", c)
+		res.FailWithMsg("两次密码不一致", c)
 		return
 	}
 	hashPwd := pwd.HashPassword(cr.Pwd)
 	err = global.DB.Model(&user).Update("password", hashPwd).Error
 	if err != nil {
 		logrus.Errorf("修改密码失败: %v", err)
-		res.FailWidthMsg("修改密码失败", c)
+		res.FailWithMsg("修改密码失败", c)
 		return
 	}
 	res.OkWidthMsg("修改密码成功", c)

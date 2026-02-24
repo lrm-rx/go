@@ -14,7 +14,7 @@ func RandStr(n int) string {
 
 func RandStrByCode(ls string, n int) string {
 	b := make([]byte, n)
-	for i := range ls {
+	for i := 0; i < n; i++ {
 		b[i] = ls[rand.Intn(len(ls))]
 	}
 	return string(b)

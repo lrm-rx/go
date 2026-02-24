@@ -22,19 +22,19 @@ func (UserAPI) RegisterView(c *gin.Context) {
 	cr := middleware.GetBind[RegisterRequest](c)
 
 	if !email.Verify(cr.EmailID, cr.Email, cr.EmailCode) {
-		res.FailWidthMsg("邮箱验证失败", c)
+		res.FailWithMsg("邮箱验证失败", c)
 		return
 	}
 	// 判断两次密码是否一致
 	if cr.Password != cr.RePassword {
-		res.FailWidthMsg("两次输入的密码不一致", c)
+		res.FailWithMsg("两次输入的密码不一致", c)
 		return
 	}
 	// 判断这个邮箱是否已经被注册
 	var user models.UserModel
 	err := global.DB.Take(&user, "email = ?", cr.Email).Error
 	if err == nil {
-		res.FailWidthMsg("该邮箱已经被注册", c)
+		res.FailWithMsg("该邮箱已经被注册", c)
 		// 把之前的那个邮箱id删除
 		email.Remove(cr.EmailID)
 		return
@@ -46,7 +46,7 @@ func (UserAPI) RegisterView(c *gin.Context) {
 		Password: hashPwd,
 	}).Error
 	if err != nil {
-		res.FailWidthMsg("注册失败", c)
+		res.FailWithMsg("注册失败", c)
 		return
 	}
 	res.OkWidthMsg("用户注册成功", c)

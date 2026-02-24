@@ -30,7 +30,7 @@ func (CaptchaAPI) GenerateCaptchaView(c *gin.Context) {
 	id, b64s, _, err := cp.Generate()
 	if err != nil {
 		logrus.Errorf("图片验证码生成失败 %s", err)
-		res.FailWidthMsg("图片验证码生成失败", c)
+		res.FailWithMsg("图片验证码生成失败", c)
 		return
 	}
 	res.OkWidthData(GenerateCaptchaResponse{

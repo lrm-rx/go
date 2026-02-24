@@ -36,7 +36,7 @@ func Fail(code int64, msg string, c *gin.Context) {
 	response(code, gin.H{}, msg, c)
 }
 
-func FailWidthMsg(msg string, c *gin.Context) {
+func FailWithMsg(msg string, c *gin.Context) {
 	response(1001, gin.H{}, msg, c)
 }
 

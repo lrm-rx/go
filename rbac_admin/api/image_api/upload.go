@@ -24,19 +24,19 @@ var WhiteMap = map[string]bool{
 func (ImageAPI) UploadView(c *gin.Context) {
 	fileHeader, err := c.FormFile("file")
 	if err != nil {
-		res.FailWidthMsg("获取文件失败", c)
+		res.FailWithMsg("获取文件失败", c)
 		return
 	}
 	// 文件大小验证
 	if fileHeader.Size > global.Config.Upload.Size*1024*1024 {
-		res.FailWidthMsg(fmt.Sprintf("文件大小不能超过%dMB", global.Config.Upload.Size), c)
+		res.FailWithMsg(fmt.Sprintf("文件大小不能超过%dMB", global.Config.Upload.Size), c)
 		return
 	}
 
 	// 图片格式验证
 	_, ok := WhiteMap[strings.ToLower(path.Ext(fileHeader.Filename))]
 	if !ok {
-		res.FailWidthMsg("图片格式必须为jpg、jpeg、png、webp、gif", c)
+		res.FailWithMsg("图片格式必须为jpg、jpeg、png、webp、gif", c)
 		return
 	}
 
@@ -66,7 +66,7 @@ func (ImageAPI) UploadView(c *gin.Context) {
 
 	err = c.SaveUploadedFile(fileHeader, dst)
 	if err != nil {
-		res.FailWidthMsg("保存文件失败", c)
+		res.FailWithMsg("保存文件失败", c)
 		return
 	}
 	res.Ok("/"+dst, "图片上传成功", c)
