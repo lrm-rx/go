@@ -20,11 +20,13 @@ func response(code int64, data any, msg string, c *gin.Context) {
 	c.JSON(200, r)
 }
 
-func OkWidthData(data any, c *gin.Context) {
+func OkWithData(data any, c *gin.Context) {
 	response(0, data, "成功", c)
 }
-
-func OkWidthMsg(msg string, c *gin.Context) {
+func OkWithList(list any, count int64, c *gin.Context) {
+	response(0, gin.H{"list": list, "count": count}, "成功", c)
+}
+func OkWithMsg(msg string, c *gin.Context) {
 	response(0, gin.H{}, msg, c)
 }
 
@@ -40,7 +42,7 @@ func FailWithMsg(msg string, c *gin.Context) {
 	response(1001, gin.H{}, msg, c)
 }
 
-func FailWidthError(error error, c *gin.Context) {
+func FailWithError(error error, c *gin.Context) {
 	response(1001, gin.H{}, error.Error(), c)
 }
 

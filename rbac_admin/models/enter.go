@@ -10,6 +10,13 @@ type Model struct {
 	UpdateAt time.Time `gorm:"autoUpdateTime" json:"updateAt"`
 }
 
+type Page struct {
+	Limit int    `json:"limit"`
+	Page  int    `json:"page"`
+	Sort  string `json:"sort"`
+	Key   string `json:"key"`
+}
+
 // 用户表
 type UserModel struct {
 	Model

@@ -24,7 +24,11 @@ type LoginResponse struct {
 }
 
 func (UserAPI) LoginView(c *gin.Context) {
-	cr := middleware.GetBind[LoginRequest](c)
+	cr, err := middleware.GetBind[LoginRequest](c)
+	if err != nil {
+		res.FailWithMsg("请求参数绑定失败: "+err.Error(), c)
+		return
+	}
 	if global.Config.Captcha.Enable {
 		// 启用了验证码
 		if cr.CaptchaID == "" || cr.CaptchaCode == "" {
@@ -37,7 +41,7 @@ func (UserAPI) LoginView(c *gin.Context) {
 		}
 	}
 	var user models.UserModel
-	err := global.DB.Preload("RoleList").Take(&user, "username = ?", cr.Username).Error
+	err = global.DB.Preload("RoleList").Take(&user, "username = ?", cr.Username).Error
 	if err != nil {
 		//c.JSON(200, gin.H{"code": 1001, "msg": "用户名或密码错误!", "data": nil})
 		res.FailWithMsg("用户名或密码错误!", c)
@@ -69,7 +73,7 @@ func (UserAPI) LoginView(c *gin.Context) {
 	//c.JSON(200, gin.H{"code": 0, "msg": "用户名登录成功!", "data": LoginResponse{
 	//	Token: token,
 	//}})
-	res.OkWidthData(LoginResponse{
+	res.OkWithData(LoginResponse{
 		Token: token,
 	}, c)
 	return

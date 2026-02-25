@@ -31,5 +31,5 @@ func (UserAPI) UserinfoView(c *gin.Context) {
 		Avatar:   user.Avatar,
 		RoleList: user.GetRoleList(),
 	}
-	res.OkWidthData(data, c)
+	res.OkWithData(data, c)
 }

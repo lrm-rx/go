@@ -17,11 +17,15 @@ type UpdatePasswordRequest struct {
 }
 
 func (UserAPI) UpdatePasswordView(c *gin.Context) {
-	cr := middleware.GetBind[UpdatePasswordRequest](c)
+	cr, err := middleware.GetBind[UpdatePasswordRequest](c)
+	if err != nil {
+		res.FailWithMsg("请求参数绑定失败: "+err.Error(), c)
+		return
+	}
 	claims := middleware.GetAuth(c)
 
 	var user models.UserModel
-	err := global.DB.Take(&user, claims.UserID).Error
+	err = global.DB.Take(&user, claims.UserID).Error
 	if err != nil {
 		res.FailWithMsg("用户不存在", c)
 		return
@@ -41,5 +45,5 @@ func (UserAPI) UpdatePasswordView(c *gin.Context) {
 		res.FailWithMsg("修改密码失败", c)
 		return
 	}
-	res.OkWidthMsg("修改密码成功", c)
+	res.OkWithMsg("修改密码成功", c)
 }

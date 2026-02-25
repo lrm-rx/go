@@ -27,7 +27,11 @@ type SendEmailResponse struct {
 }
 
 func (EmailAPI) SendEmailView(c *gin.Context) {
-	cr := middleware.GetBind[SendEmailRequest](c)
+	cr, err := middleware.GetBind[SendEmailRequest](c)
+	if err != nil {
+		res.FailWithMsg("请求参数绑定失败: "+err.Error(), c)
+		return
+	}
 	// 验证码长度检查
 	if len(cr.CaptchaCode) != 6 {
 		res.FailWithMsg("验证码长度必须为6位", c)
@@ -71,13 +75,13 @@ func (EmailAPI) SendEmailView(c *gin.Context) {
 	*/
 
 	content := fmt.Sprintf("用户注册的验证码为 %s 5分钟内有效!", code)
-	err := email.SendEmail("用户注册", content, cr.Email)
+	err = email.SendEmail("用户注册", content, cr.Email)
 	if err != nil {
 		logrus.Errorf("邮件发送失败 %s", err)
 		res.FailWithMsg("邮件发送失败", c)
 		return
 	}
-	res.OkWidthData(SendEmailResponse{
+	res.OkWithData(SendEmailResponse{
 		EmailID: emailID,
 	}, c)
 }

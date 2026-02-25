@@ -33,7 +33,7 @@ func (CaptchaAPI) GenerateCaptchaView(c *gin.Context) {
 		res.FailWithMsg("图片验证码生成失败", c)
 		return
 	}
-	res.OkWidthData(GenerateCaptchaResponse{
+	res.OkWithData(GenerateCaptchaResponse{
 		CaptchaID: id,
 		Captcha:   b64s,
 	}, c)

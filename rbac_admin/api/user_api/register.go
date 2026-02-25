@@ -19,7 +19,11 @@ type RegisterRequest struct {
 }
 
 func (UserAPI) RegisterView(c *gin.Context) {
-	cr := middleware.GetBind[RegisterRequest](c)
+	cr, err := middleware.GetBind[RegisterRequest](c)
+	if err != nil {
+		res.FailWithMsg("请求参数绑定失败: "+err.Error(), c)
+		return
+	}
 
 	if !email.Verify(cr.EmailID, cr.Email, cr.EmailCode) {
 		res.FailWithMsg("邮箱验证失败", c)
@@ -32,7 +36,7 @@ func (UserAPI) RegisterView(c *gin.Context) {
 	}
 	// 判断这个邮箱是否已经被注册
 	var user models.UserModel
-	err := global.DB.Take(&user, "email = ?", cr.Email).Error
+	err = global.DB.Take(&user, "email = ?", cr.Email).Error
 	if err == nil {
 		res.FailWithMsg("该邮箱已经被注册", c)
 		// 把之前的那个邮箱id删除
@@ -49,5 +53,5 @@ func (UserAPI) RegisterView(c *gin.Context) {
 		res.FailWithMsg("注册失败", c)
 		return
 	}
-	res.OkWidthMsg("用户注册成功", c)
+	res.OkWithMsg("用户注册成功", c)
 }
