@@ -15,7 +15,8 @@ func Run() {
 	CaptchaRouter(g)
 	EmailRouter(g)
 	ImageRouter(g)
-	
+	MenuRouter(g)
+
 	// 将 /uploads 的路由映射到uploads目录 注意 ./ 不能少
 	r.Static("/uploads", "./uploads")
 	logrus.Infof("web服务运行在 %s", s.Addr())

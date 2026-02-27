@@ -84,6 +84,7 @@ type Meta struct {
 }
 type MenuModel struct {
 	Model
+	Enable          bool   `json:"enable"` // 是否显示
 	Name            string `gorm:"size:32,unique" json:"name"`
 	Path            string `gorm:"size:128" json:"path"`
 	Component       string `gorm:"size:128" json:"component"`
