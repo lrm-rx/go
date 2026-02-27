@@ -5,6 +5,7 @@ import (
 	"rbac.admin/api"
 	"rbac.admin/api/user_api"
 	"rbac.admin/middleware"
+	"rbac.admin/models"
 )
 
 func UserRouter(r *gin.RouterGroup) {
@@ -17,4 +18,5 @@ func UserRouter(r *gin.RouterGroup) {
 	g.PUT("user", middleware.AuthMiddleware, middleware.BindJson[user_api.UpdateUserinfoRequest], app.UpdateUserinfoView)
 	g.GET("user/info", middleware.AuthMiddleware, app.UserinfoView)
 	g.POST("user/list", middleware.AuthMiddleware, middleware.BindJson[user_api.UserListRequest], app.UserListView)
+	g.DELETE("users", middleware.AuthMiddleware, middleware.BindJson[models.IDListRequest], app.RemoveView)
 }

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -17,6 +19,14 @@ type Page struct {
 	Key   string `json:"key"`
 }
 
+type IDRequest struct {
+	ID uint `json:"id" form:"id" uri:"id"`
+}
+
+type IDListRequest struct {
+	IDList []uint `json:"idList"`
+}
+
 // 用户表
 type UserModel struct {
 	Model
@@ -27,6 +37,13 @@ type UserModel struct {
 	Password     string      `gorm:"size:256" json:"-"`
 	IsSuperAdmin bool        `gorm:"default:false" json:"isSuperAdmin"`
 	RoleList     []RoleModel `gorm:"many2many:user_role_models;joinForeignKey:UserID;JoinReferences:RoleID" json:"roleList"`
+}
+
+func (u UserModel) BeforeDelete(tx *gorm.DB) error {
+	var userRoleList []UserRoleModel
+	err := tx.Find(&userRoleList, "user_id = ?", u.ID).Delete(&userRoleList).Error
+	logrus.Infof("删除用户关联的角色 %d 条", len(userRoleList))
+	return err
 }
 
 func (u *UserModel) GetRoleList() []uint {
