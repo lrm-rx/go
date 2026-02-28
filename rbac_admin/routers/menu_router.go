@@ -12,4 +12,5 @@ func MenuRouter(r *gin.RouterGroup) {
 	g := r.Group("menu")
 	app := api.App.MenuAPI
 	g.POST("create", middleware.AuthMiddleware, middleware.BindJson[menu_api.MenuCreateRequest], app.MenuCreateView)
+	g.POST("list", middleware.AuthMiddleware, middleware.BindJson[menu_api.MenuListRequest], app.MenuListView)
 }
