@@ -5,6 +5,7 @@ import (
 	"rbac.admin/api"
 	"rbac.admin/api/menu_api"
 	"rbac.admin/middleware"
+	"rbac.admin/models"
 )
 
 func MenuRouter(r *gin.RouterGroup) {
@@ -15,4 +16,5 @@ func MenuRouter(r *gin.RouterGroup) {
 	g.POST("update", middleware.AuthMiddleware, middleware.BindJson[menu_api.MenuUpdateRequest], app.MenuUpdateView)
 	g.POST("list", middleware.AuthMiddleware, middleware.BindJson[menu_api.MenuListRequest], app.MenuListView)
 	g.GET("tree", middleware.AuthMiddleware, app.MenuTreeView)
+	g.POST("delete", middleware.AuthMiddleware, middleware.BindJson[models.IDListRequest], app.RemoveView)
 }

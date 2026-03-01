@@ -105,6 +105,24 @@ func FindSubMenuList(model MenuModel) (list []MenuModel) {
 	return
 }
 
+func (m MenuModel) BeforeDelete(tx *gorm.DB) error {
+	// 找它下面的子菜单，将子菜单的父菜单id修改为自己的父菜单id
+	tx.Preload("Children").Take(&m)
+	for _, child := range m.Children {
+		tx.Model(child).Update("parent_menu_id", m.ParentMenuID)
+		if m.ParentMenuID == nil {
+			logrus.Infof("更新菜单 %d 的parent_menu_id为 null", child.ID)
+		} else {
+			logrus.Infof("更新菜单 %d 的parent_menu_id为 %d", child.ID, m.ParentMenuID)
+		}
+	}
+
+	var roleMenuList []RoleMenuModel
+	err := tx.Find(&roleMenuList, "menu_id = ?", m.ID).Delete(&roleMenuList).Error
+	logrus.Infof("删除角色菜单 %d 条", len(roleMenuList))
+	return err
+}
+
 type ApiModel struct {
 	Model
 	Name   string `gorm:"size:256" json:"name"`

@@ -14,9 +14,9 @@ func UserRouter(r *gin.RouterGroup) {
 	app := api.App.UserAPI
 	g.POST("login", middleware.BindJson[user_api.LoginRequest], app.LoginView)
 	g.POST("register", middleware.BindJson[user_api.RegisterRequest], app.RegisterView)
-	g.PUT("user/password", middleware.AuthMiddleware, middleware.BindJson[user_api.UpdatePasswordRequest], app.UpdatePasswordView)
-	g.PUT("user", middleware.AuthMiddleware, middleware.BindJson[user_api.UpdateUserinfoRequest], app.UpdateUserinfoView)
+	g.POST("user/password", middleware.AuthMiddleware, middleware.BindJson[user_api.UpdatePasswordRequest], app.UpdatePasswordView)
+	g.POST("user", middleware.AuthMiddleware, middleware.BindJson[user_api.UpdateUserinfoRequest], app.UpdateUserinfoView)
 	g.GET("user/info", middleware.AuthMiddleware, app.UserinfoView)
 	g.POST("user/list", middleware.AuthMiddleware, middleware.BindJson[user_api.UserListRequest], app.UserListView)
-	g.DELETE("users", middleware.AuthMiddleware, middleware.BindJson[models.IDListRequest], app.RemoveView)
+	g.POST("users/delete", middleware.AuthMiddleware, middleware.BindJson[models.IDListRequest], app.RemoveView)
 }
