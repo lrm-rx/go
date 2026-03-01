@@ -22,11 +22,17 @@ func (MenuAPI) MenuListView(c *gin.Context) {
 
 	cr.Page.Sort = "sort desc"
 
-	list, count, _ := query.List(models.MenuModel{}, query.Option{
-		Page:     cr.Page,
-		Likes:    []string{"name", "title"},
-		Where:    global.DB.Where("parent_menu_id is null"),
-		Preloads: []string{"Children"},
+	list, count, _ := query.List(&models.MenuModel{}, query.Option{
+		Page:  cr.Page,
+		Likes: []string{"name", "title"},
+		Where: global.DB.Where("parent_menu_id is null"),
+		//Preloads: []string{"Children"},
+		Callback: func(_list any) {
+			list := _list.([]*models.MenuModel)
+			for _, model := range list {
+				findSubMenuList(model)
+			}
+		},
 	})
 
 	res.OkWithList(list, count, c)

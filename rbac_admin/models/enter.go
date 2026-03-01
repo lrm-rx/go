@@ -89,10 +89,10 @@ type MenuModel struct {
 	Path            string `gorm:"size:128" json:"path"`
 	Component       string `gorm:"size:128" json:"component"`
 	Meta            `gorm:"embedded" json:"meta"`
-	ParentMenuID    *uint       `json:"parentMenuID"` // 父菜单id
-	ParentMenuModel *MenuModel  `gorm:"foreignKey:ParentMenuID" json:"-"`
-	Children        []MenuModel `gorm:"foreignKey:ParentMenuID" json:"children"` // 子菜单
-	Sort            int         `json:"sort"`
+	ParentMenuID    *uint        `json:"parentMenuID"` // 父菜单id
+	ParentMenuModel *MenuModel   `gorm:"foreignKey:ParentMenuID" json:"-"`
+	Children        []*MenuModel `gorm:"foreignKey:ParentMenuID" json:"children"` // 子菜单
+	Sort            int          `json:"sort"`
 }
 
 type ApiModel struct {
