@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
+	"rbac.admin/global"
 	"time"
 )
 
@@ -93,6 +94,15 @@ type MenuModel struct {
 	ParentMenuModel *MenuModel   `gorm:"foreignKey:ParentMenuID" json:"-"`
 	Children        []*MenuModel `gorm:"foreignKey:ParentMenuID" json:"children"` // 子菜单
 	Sort            int          `json:"sort"`
+}
+
+func FindSubMenuList(model MenuModel) (list []MenuModel) {
+	global.DB.Preload("Children").Take(&model)
+	list = append(list, model)
+	for _, child := range model.Children {
+		list = append(list, FindSubMenuList(*child)...)
+	}
+	return
 }
 
 type ApiModel struct {
