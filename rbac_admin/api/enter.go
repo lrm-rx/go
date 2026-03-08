@@ -5,6 +5,7 @@ import (
 	"rbac.admin/api/email_api"
 	"rbac.admin/api/image_api"
 	"rbac.admin/api/menu_api"
+	"rbac.admin/api/role_api"
 	"rbac.admin/api/user_api"
 )
 
@@ -14,6 +15,7 @@ type API struct {
 	EmailAPI   email_api.EmailAPI
 	ImageAPI   image_api.ImageAPI
 	MenuAPI    menu_api.MenuAPI
+	RoleAPI    role_api.RoleAPI
 }
 
 var App = new(API)

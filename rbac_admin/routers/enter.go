@@ -16,6 +16,7 @@ func Run() {
 	EmailRouter(g)
 	ImageRouter(g)
 	MenuRouter(g)
+	RoleRouter(g)
 
 	// 将 /uploads 的路由映射到uploads目录 注意 ./ 不能少
 	r.Static("/uploads", "./uploads")
