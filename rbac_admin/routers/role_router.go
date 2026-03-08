@@ -5,6 +5,7 @@ import (
 	"rbac.admin/api"
 	"rbac.admin/api/role_api"
 	"rbac.admin/middleware"
+	"rbac.admin/models"
 )
 
 func RoleRouter(r *gin.RouterGroup) {
@@ -14,4 +15,5 @@ func RoleRouter(r *gin.RouterGroup) {
 	g.POST("create", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleCreateRequest], app.RoleCreateView)
 	g.POST("list", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleListRequest], app.RoleListView)
 	g.POST("update", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleUpdateRequest], app.RoleUpdateView)
+	g.POST("delete", middleware.AuthMiddleware, middleware.BindJson[models.IDListRequest], app.RemoveView)
 }

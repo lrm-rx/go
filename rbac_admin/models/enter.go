@@ -25,7 +25,7 @@ type IDRequest struct {
 }
 
 type IDListRequest struct {
-	IDList []uint `json:"idList"`
+	IDList []uint `json:"idList" binding:"required"`
 }
 
 // 用户表
@@ -67,6 +67,16 @@ type RoleModel struct {
 	Title    string      `gorm:"size:16,unique" json:"title"`
 	UserList []UserModel `gorm:"many2many:user_role_models;joinForeignKey:RoleID;JoinReferences:UserID" json:"roleList"`
 	MenuList []MenuModel `gorm:"many2many:role_menu_models;joinForeignKey:RoleID;JoinReferences:MenuID" json:"menuList"`
+}
+
+func (r RoleModel) BeforeDelete(tx *gorm.DB) error {
+	var roleMenuList []RoleMenuModel
+	err := tx.Find(&roleMenuList, "role_id = ?", r.ID).Delete(&roleMenuList).Error
+	logrus.Infof("删除角色菜单 %d 条", len(roleMenuList))
+	var roleUserList []UserRoleModel
+	err = tx.Find(&roleUserList, "role_id = ?", r.ID).Delete(&roleUserList).Error
+	logrus.Infof("删除角色用户 %d 条", len(roleUserList))
+	return err
 }
 
 // 用户角色表
