@@ -13,4 +13,5 @@ func RoleRouter(r *gin.RouterGroup) {
 	app := api.App.RoleAPI
 	g.POST("create", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleCreateRequest], app.RoleCreateView)
 	g.POST("list", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleListRequest], app.RoleListView)
+	g.POST("update", middleware.AuthMiddleware, middleware.BindJson[role_api.RoleUpdateRequest], app.RoleUpdateView)
 }
